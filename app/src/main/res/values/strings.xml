@@ -1,0 +1,101 @@
+<resources>
+    <!-- Common -->
+    <string name="app_name">Harpia</string>
+    <string name="back_text">Voltar</string>
+    <string name="close_text">Sair</string>
+    <string name="create_account_text">Criar conta</string>
+    <string name="login_text">Entrar</string>
+    <string name="change_password_text">Trocar senha</string>
+    <string name="more_info_text">Saiba mais</string>
+    <string name="see_details_text">Ver detalhes</string>
+    <string name="search_info_text">Buscar informações</string>
+    <string name="save_info_text">Salvar informações</string>
+    <!-- Login Screen -->
+    <string name="login_input_placeholder_1">Digite o seu e-mail</string>
+    <string name="login_input_placeholder_2">Digite a sua senha</string>
+    <string name="login_redirect_text_1">Esqueceu sua senha? Clique aqui.</string>
+    <string name="login_redirect_text_2">Ainda não conhece o app? Clique aqui.</string>
+    <!-- Signup Screen -->
+    <string name="signup_title">Digite as\n informações para \no cadastro</string>
+    <string name="signup_input_placeholder_1">Informe o seu nome</string>
+    <string name="signup_input_placeholder_2">Informe o seu e-mail</string>
+    <string name="signup_input_placeholder_3">Informe sua data de nascimento</string>
+    <string name="signup_input_placeholder_4">Digite a sua senha</string>
+    <!-- Password Screen -->
+    <string name="password_title">Informe a nova \nsenha</string>
+    <string name="password_input_placeholder_1">Informe a nova senha</string>
+    <string name="password_input_placeholder_2">Confirme a nova senha</string>
+    <!-- About Screen -->
+    <string name="about_title">Sobre o Harpia:</string>
+    <string name="about_content_1">Somos um app de compartilhamento de experiências metodológicas ativas.\n
+        Logo, nossa intenção é integrar professores que estejam buscando tais abordagens por meio de uma plataforma intuitiva e funcional.\n
+        Aqui você pode:
+    </string>
+    <string name="about_bullet_content_1">Compartilhar e visualizar experiências aplicadas por outros docentes;
+    </string>
+    <string name="about_bullet_content_2">Explorar metodologias ativas de ensino e tipos de avaliações.
+    </string>
+    <string name="about_thanks">Esperamos que goste!\nAbraços, Equipe Harpia!</string>
+    <!-- Team Screen -->
+    <string name="team_title">Nossa equipe!</string>
+    <string name="team_content_1">O aplicativo surgiu a partir de um projeto de iniciação científica, orientado pela professora Andreia Crico dos Santos. Sua criação está ocorrendo em conjunto com o aluno Gabriel França de Almeida.\n
+        Além disso, muitas outras pessoas contribuiram para a idealização do mesmo. Nossos agradecimentos a : </string>
+    <string name="team_bullet_content_1">Professor Vínicius Fonseca Maciel;
+    </string>
+    <string name="team_bullet_content_2">Bruno Moisés;
+    </string>
+    <string name="team_bullet_content_3">Leonardo Correia de Castro;
+    </string>
+    <string name="team_bullet_content_4">Luciano Augusto de Oliveira Santos;
+    </string>
+    <string name="team_bullet_content_5">Rander Felipe Miranda de Paula.
+    </string>
+    <!-- Home Screen -->
+    <string name="home_title">Bem-vindo ao \nHarpia!</string>
+    <string name="home_button_content_1">Compartilhar \nexperiência</string>
+    <string name="home_button_content_2">Buscar \nexperiências</string>
+    <string name="home_button_content_3">Conhecer \nmetodologias \ne avaliações</string>
+    <string name="home_button_content_4">Perfil</string>
+    <string name="home_thanks">Obrigado por usar nosso projeto!</string>
+    <!-- Methodologies Screen -->
+    <string name="methodologies_title">Mais sobre \nmetodologias \nativas</string>
+    <string name="methodologies_content_1">A Sala de aula invertida é uma metodologia criada a pouco tempo nos EUA, como uma alternativa interativa de ensinar em qualquer lugar.</string>
+    <string name="methodologies_content_2">A gamificação é um conceito aplicado em várias esferas e visa promover diversão durante o aprendizado, unindo conceitos técnicos aos jogos.</string>
+    <!-- Search Experience Screen -->
+    <string name="search_experience_title">Informe detalhes \npara a sua busca</string>
+    <string name="search_experience_placeholder_1">Digite uma palavra chave</string>
+    <string name="search_experience_placeholder_2">Em qual turma a metodologia foi aplicada?</string>
+    <string name="search_experience_placeholder_3">Qual metodologia deseja buscar?</string>
+    <!-- Experience Result Screen -->
+    <string name="experience_result_title">Aqui estão os \nresultados</string>
+    <string name="experience_result_content_1">Essa é uma atividade que usa sala de aula invertida e apresenta conceitos de ciência para a turma do 5ºano do ensino fundamental.</string>
+    <string name="experience_result_content_2">Essa é uma atividade que usa  gamificação e apresenta conceitos de matemática para a turma do 7ºano do ensino fundamental.</string>
+    <!-- Profile Screen -->
+    <string name="profile_title">Meu perfil</string>
+    <string name="profile_input_placeholder_1">Seu nome: Gabriel França</string>
+    <string name="profile_input_placeholder_2">Sua instituição de ensino: IFTM</string>
+    <string name="profile_input_placeholder_3">Seu e-mail: gabriel.franca@estudante.iftm.edu.br</string>
+    <string name="profile_input_placeholder_4">Sua data de nascimento: 13/08/2000</string>
+    <string name="profile_input_placeholder_5">Experiências compartilhadas: 5</string>
+    <!-- New Experience Screen -->
+    <string name="new_experience_title">Informe detalhes \nda sua experiência</string>
+    <string name="new_experience_input_placeholder_1">Digite o título da experiência</string>
+    <string name="new_experience_input_placeholder_2">Digite o tema da experiência</string>
+    <string name="new_experience_input_placeholder_3">Em qual turma foi aplicada?</string>
+    <string name="new_experience_input_placeholder_4">Qual metodologia foi usada?</string>
+    <string name="new_experience_input_placeholder_5">Descreva sobre a atividade! (Dica: Use materiais e métodos, temas a serem trabalhados e resultados esperados como tópicos na descrição)</string>
+    <!-- Classes Options -->
+    <string name="class_option_1">6° ano</string>
+    <string name="class_option_2">7° ano</string>
+    <string name="class_option_3">8° ano</string>
+    <string name="class_option_4">9° ano</string>
+    <string name="class_option_5">1° ano do E.M.</string>
+    <string name="class_option_6">2° ano do E.M.</string>
+    <string name="class_option_7">3° ano do E.M.</string>
+    <!-- Methodologies Options -->
+    <string name="methodology_option_1">Sala de aula invertida</string>
+    <string name="methodology_option_2">Gameficação</string>
+    <string name="methodology_option_3">Aprendizagem por projeto</string>
+    <string name="methodology_option_4">Design Thinking</string>
+    <string name="methodology_option_5">Outra</string>
+</resources>
