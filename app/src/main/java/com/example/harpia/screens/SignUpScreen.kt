@@ -1,7 +1,5 @@
 package com.example.harpia.screens
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,32 +20,20 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.harpia.MainActivity
 import com.example.harpia.R
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.CommonTextField
 import com.example.harpia.components.NavigatorIconButton
-import com.example.harpia.components.createUserWithEmailAndPassword
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue30
 import com.example.harpia.ui.theme.Purple20
 import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 
 
 @Composable
 fun SignUpScreen() {
-
-    lateinit var firebaseAuth: FirebaseAuth
-
-    firebaseAuth = Firebase.auth
-
-    //Log.d("Firebase", firebaseAuth.toString())
-
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -115,9 +101,7 @@ fun SignUpScreen() {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                     )
                     Spacer(modifier = Modifier.height(70.dp))
-                    CommonButton(text = stringResource(id = R.string.create_account_text), onCLick = {
-                        createUserWithEmailAndPassword(firebaseAuth, "g200013@hotmai.com", "12345678")
-                    })
+                    CommonButton(text = stringResource(id = R.string.create_account_text), onCLick = {})
                 }
             }
         }

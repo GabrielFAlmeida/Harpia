@@ -18,9 +18,10 @@ import com.example.harpia.screens.ProfileScreen
 import com.example.harpia.screens.SearchExperienceScreen
 import com.example.harpia.screens.SignUpScreen
 import com.example.harpia.screens.TeamScreen
+import com.google.firebase.database.DatabaseReference
 
 @Composable
-fun HarpiaApp() {
+fun HarpiaApp(databaseReference: DatabaseReference) {
 
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -60,7 +61,7 @@ fun HarpiaApp() {
                 }
 
                 is Screen.NewExperienceScreen -> {
-                    NewExperienceScreen()
+                    NewExperienceScreen(databaseReference)
                 }
 
                 is Screen.ProfileScreen -> {

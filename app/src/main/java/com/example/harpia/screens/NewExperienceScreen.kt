@@ -1,46 +1,45 @@
 package com.example.harpia.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.example.harpia.R
+import com.example.harpia.classes.Experience
 import com.example.harpia.classes.SelectOption
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonSelect
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.CommonTextField
-import com.example.harpia.components.NavigatorClickableText
 import com.example.harpia.components.NavigatorIconButton
+import com.example.harpia.components.commonToast
+import com.example.harpia.navigation.HarpiaAppRouter
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue30
 import com.example.harpia.ui.theme.Purple20
 import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
-
+import com.google.firebase.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 
 @Composable
-fun NewExperienceScreen() {
+fun NewExperienceScreen(databaseReference: DatabaseReference) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -56,6 +55,7 @@ fun NewExperienceScreen() {
                 .fillMaxSize()
                 .background(Purple20)
         ) {
+            val context = LocalContext.current
             NavigatorIconButton(
                 destinationScreen = Screen.HomeScreen,
                 text = stringResource(id = R.string.back_text),
@@ -81,60 +81,127 @@ fun NewExperienceScreen() {
                         color = Blue30
                     )
                     Spacer(modifier = Modifier.height(40.dp))
-                    CommonTextField(
+                    val experienceTitle = CommonTextField(
                         placeholder = stringResource(id = R.string.new_experience_input_placeholder_1),
                         modifier = Modifier
                             .fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CommonTextField(
+                    val experienceTheme = CommonTextField(
                         placeholder = stringResource(id = R.string.new_experience_input_placeholder_2),
                         modifier = Modifier
                             .fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CommonSelect(
+                    val experienceClass = CommonSelect(
                         placeholder = stringResource(id = R.string.new_experience_input_placeholder_3),
                         options = listOf(
-                            SelectOption(stringResource(id = R.string.class_option_1), "6_EF"),
-                            SelectOption(stringResource(id = R.string.class_option_2), "7_EF"),
-                            SelectOption(stringResource(id = R.string.class_option_3), "8_EF"),
-                            SelectOption(stringResource(id = R.string.class_option_4), "9_EF"),
-                            SelectOption(stringResource(id = R.string.class_option_5), "1_EM"),
-                            SelectOption(stringResource(id = R.string.class_option_6), "2_EM"),
-                            SelectOption(stringResource(id = R.string.class_option_7), "3_EM"),
+                            SelectOption(stringResource(id = R.string.class_option_1), "6° ano"),
+                            SelectOption(stringResource(id = R.string.class_option_2), "7° ano"),
+                            SelectOption(stringResource(id = R.string.class_option_3), "8° ano"),
+                            SelectOption(stringResource(id = R.string.class_option_4), "9° ano"),
+                            SelectOption(
+                                stringResource(id = R.string.class_option_5),
+                                "1° ano do E.M."
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.class_option_6),
+                                "2° ano do E.M."
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.class_option_7),
+                                "3° ano do E.M."
+                            ),
                         )
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CommonSelect(
+                    val experienceMethodology = CommonSelect(
                         placeholder = stringResource(id = R.string.new_experience_input_placeholder_4),
                         options = listOf(
-                            SelectOption(stringResource(id = R.string.methodology_option_1), "INV_CLASS"),
-                            SelectOption(stringResource(id = R.string.methodology_option_2), "GAME"),
-                            SelectOption(stringResource(id = R.string.methodology_option_3), "PROJ"),
-                            SelectOption(stringResource(id = R.string.methodology_option_4), "DESIGN_THNK"),
-                            SelectOption(stringResource(id = R.string.methodology_option_5), "OTHER")
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_1),
+                                "Sala de aula invertida"
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_2),
+                                "Gameficação"
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_3),
+                                "Aprendizagem por projeto"
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_4),
+                                "Design Thinking"
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_5),
+                                "Outra"
+                            )
                         )
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CommonTextField(
+                    val experienceDescription = CommonTextField(
                         placeholder = stringResource(id = R.string.new_experience_input_placeholder_5),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(120.dp),
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                     )
                     Spacer(modifier = Modifier.height(10.dp))
-                    CommonButton(text = stringResource(id = R.string.save_info_text))
+                    CommonButton(text = stringResource(id = R.string.save_info_text), onCLick = {
+                        val experience = Experience(
+                            experienceTitle,
+                            experienceTheme,
+                            experienceClass,
+                            experienceMethodology,
+                            experienceDescription
+                        )
+                        if (validateExperience(experience)) {
+                            createExperience(databaseReference, experience)
+                            commonToast(
+                                context,
+                                Toast.LENGTH_SHORT,
+                                "Experiência criada com sucesso."
+                            )
+                            HarpiaAppRouter.navigateTo(Screen.HomeScreen)
+                        } else {
+                            commonToast(
+                                context,
+                                Toast.LENGTH_LONG,
+                                "Preencha todos os campos para criar uma experiência."
+                            )
+                        }
+                    })
                 }
             }
         }
     }
 }
 
+fun validateExperience(experience: Experience): Boolean {
+    return if (experience.title.isBlank() || experience.title.isEmpty()) {
+        false
+    } else if (experience.theme.isBlank() || experience.theme.isEmpty()) {
+        false
+    } else if (experience.schoolClass.isBlank() || experience.schoolClass.isEmpty()) {
+        false
+    } else if (experience.methodology.isBlank() || experience.methodology.isEmpty()) {
+        false
+    } else if (experience.description.isBlank() || experience.description.isEmpty()) {
+        false
+    } else {
+        true
+    }
+}
+
+fun createExperience(databaseReference: DatabaseReference, experience: Experience) {
+    databaseReference.child(experience.title.toString()).setValue(experience)
+}
+
 @Preview
 @Composable
 fun NewExperienceScreenPreview() {
-    NewExperienceScreen()
+    val database = Firebase.database //Caminho para encontrar o banco na nuvem.
+    val databaseReference = database.getReference("experiences")
+    NewExperienceScreen(databaseReference)
 }

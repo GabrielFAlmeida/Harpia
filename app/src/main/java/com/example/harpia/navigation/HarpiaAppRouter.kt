@@ -20,7 +20,7 @@ sealed class Screen{
 
 object HarpiaAppRouter {
 
-    var currentScreen: MutableState<Screen> = mutableStateOf(Screen.SignUpScreen)
+    var currentScreen: MutableState<Screen> = mutableStateOf(Screen.NewExperienceScreen)
 
     fun navigateTo(destination: Screen){
         currentScreen.value = destination

@@ -79,11 +79,11 @@
     <string name="profile_input_placeholder_5">Experiências compartilhadas: 5</string>
     <!-- New Experience Screen -->
     <string name="new_experience_title">Informe detalhes \nda sua experiência</string>
-    <string name="new_experience_input_placeholder_1">Digite o título da experiência</string>
-    <string name="new_experience_input_placeholder_2">Digite o tema da experiência</string>
-    <string name="new_experience_input_placeholder_3">Em qual turma foi aplicada?</string>
-    <string name="new_experience_input_placeholder_4">Qual metodologia foi usada?</string>
-    <string name="new_experience_input_placeholder_5">Descreva sobre a atividade! (Dica: Use materiais e métodos, temas a serem trabalhados e resultados esperados como tópicos na descrição)</string>
+    <string name="new_experience_input_placeholder_1">Digite o título da experiência*</string>
+    <string name="new_experience_input_placeholder_2">Digite o tema da experiência*</string>
+    <string name="new_experience_input_placeholder_3">Em qual turma foi aplicada?*</string>
+    <string name="new_experience_input_placeholder_4">Qual metodologia foi usada?*</string>
+    <string name="new_experience_input_placeholder_5">Descreva sobre a atividade!* (Dica: Use materiais e métodos, temas a serem trabalhados e resultados esperados como tópicos na descrição)</string>
     <!-- Classes Options -->
     <string name="class_option_1">6° ano</string>
     <string name="class_option_2">7° ano</string>

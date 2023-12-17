@@ -25,7 +25,6 @@ import com.example.harpia.R
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonTextField
 import com.example.harpia.components.NavigatorClickableText
-import com.example.harpia.navigation.HarpiaAppRouter
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Purple20
 
@@ -78,13 +77,13 @@ fun LoginScreen() {
                 Spacer(modifier = Modifier.height(40.dp))
                 CommonButton(
                     text = stringResource(id = R.string.login_text),
-                    /*onCLick = HarpiaAppRouter.navigateTo(Screen.SignUpScreen)*/
+                    onCLick = {}
                 )
                 NavigatorClickableText(
                     text = stringResource(id = R.string.login_redirect_text_1),
                     destinationScreen = Screen.PasswordScreen
                 )
-                CommonButton(text = stringResource(id = R.string.create_account_text))
+                CommonButton(text = stringResource(id = R.string.create_account_text), onCLick = {})
                 NavigatorClickableText(
                     text = stringResource(id = R.string.login_redirect_text_2),
                     destinationScreen = Screen.AboutScreen

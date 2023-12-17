@@ -2,7 +2,9 @@
 
 package com.example.harpia.components
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -69,10 +71,8 @@ import com.example.harpia.ui.theme.Blue20
 import com.example.harpia.ui.theme.Blue20_o1
 import com.example.harpia.ui.theme.Blue30
 import com.example.harpia.ui.theme.Blue40
-import com.example.harpia.ui.theme.Purple10
 import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
-import com.google.firebase.auth.FirebaseAuth
 
 // TEXTS
 @Composable
@@ -201,7 +201,7 @@ fun CommonTextField(
     readonly: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
-) {
+): String {
     var textValue by remember { mutableStateOf(TextFieldValue("")) }
 
     OutlinedTextField(
@@ -213,15 +213,16 @@ fun CommonTextField(
         modifier = modifier,
         shape = RoundedCornerShape(15.dp),
         readOnly = readonly,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            containerColor = Blue20_o1,
-            unfocusedBorderColor = Blue20,
-            focusedBorderColor = Purple10,
-            textColor = Blue40
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Blue20_o1,
+            unfocusedContainerColor = Blue20_o1,
+            focusedTextColor = Blue40,
+            disabledTextColor = Blue40
         ),
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation
     )
+    return textValue.text
 }
 
 @Preview
@@ -240,7 +241,7 @@ fun CommonSelect(
     placeholder: String,
     textStyle: TextStyle = Typography.displayMedium,
     options: List<SelectOption>
-) {
+): String {
     var isExpanded by remember { mutableStateOf(false) }
     var optionValue by remember { mutableStateOf("") }
 
@@ -254,11 +255,11 @@ fun CommonSelect(
             placeholder = { Text(text = placeholder, style = textStyle) },
             modifier = Modifier.menuAnchor(),
             shape = RoundedCornerShape(15.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Blue20_o1,
-                unfocusedBorderColor = Blue20,
-                focusedBorderColor = Purple10,
-                textColor = Blue40
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Blue20_o1,
+                unfocusedContainerColor = Blue20_o1,
+                focusedTextColor = Blue40,
+                disabledTextColor = Blue40
             ),
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
         )
@@ -281,6 +282,7 @@ fun CommonSelect(
             }
         }
     }
+    return optionValue
 }
 
 @Preview
@@ -306,10 +308,10 @@ fun CommonButton(
     text: String,
     buttonColor: Color = Blue30,
     textColor: Color = White,
-    onCLick: Any = ""
+    onCLick: () -> Unit
 ) {
     Button(
-        onClick = { onCLick },
+        onClick = onCLick,
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(48.dp),
@@ -334,7 +336,9 @@ fun CommonButton(
 @Preview
 @Composable
 fun CommonButtonPreview() {
-    CommonButton(text = stringResource(id = R.string.create_account_text))
+    CommonButton(
+        text = stringResource(id = R.string.create_account_text),
+        onCLick = { Log.i("Component test", "Common button click works") })
 }
 
 @Composable
@@ -450,15 +454,11 @@ fun CommonCardPreview() {
     )
 }
 
-fun createUserWithEmailAndPassword(firebaseAuth: FirebaseAuth, email: String, password: String) {
-    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-        if (task.isSuccessful) {
-            Log.d("EmailAndPassword", "createUserWithEmailAndPassword: Success")
-            firebaseAuth.currentUser
-        } else {
-            Log.d("EmailAndPassword", "createUserWithEmailAndPassword: Failure", task.exception)
-            //Toast.makeText(context, "Firebase Authetication Failure", Toast.LENGTH_SHORT).show()
-        }
-    }
+//TOAST NOTIFICATIONS
+fun commonToast(context: Context, length: Int = Toast.LENGTH_LONG, text: String) {
+    Toast.makeText(
+        context,
+        text,
+        length
+    ).show()
 }
-
