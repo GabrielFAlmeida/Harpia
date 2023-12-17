@@ -195,7 +195,7 @@ fun validateExperience(experience: Experience): Boolean {
 }
 
 fun createExperience(databaseReference: DatabaseReference, experience: Experience) {
-    databaseReference.child(experience.title.toString()).setValue(experience)
+    databaseReference.child(experience.title).setValue(experience)
 }
 
 @Preview
