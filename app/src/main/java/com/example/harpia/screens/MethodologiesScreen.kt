@@ -1,5 +1,6 @@
 package com.example.harpia.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -13,18 +14,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonCard
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.NavigatorIconButton
+import com.example.harpia.components.commonToast
+import com.example.harpia.domain.classes.MethodologiesRepository
+import com.example.harpia.domain.classes.Methodology
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue20
 import com.example.harpia.ui.theme.Blue30
@@ -32,10 +42,16 @@ import com.example.harpia.ui.theme.Grey10_o4
 import com.example.harpia.ui.theme.Purple20
 import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
-
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 @Composable
-fun MethodologiesScreen() {
+fun MethodologiesScreen(navController: NavController, database: FirebaseFirestore) {
+
+    val repository = MethodologiesRepository()
+    val methodologies = remember { mutableStateListOf(Methodology()) }
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -51,8 +67,11 @@ fun MethodologiesScreen() {
                 .fillMaxSize()
                 .background(Purple20)
         ) {
+            val context = LocalContext.current
+            repository.getMethodologyList(methodologies, database)
             NavigatorIconButton(
-                destinationScreen = Screen.HomeScreen,
+                navController = navController,
+                route = Screen.HomeScreen.route,
                 text = stringResource(id = R.string.back_text),
                 color = White
             )
@@ -76,62 +95,45 @@ fun MethodologiesScreen() {
                         textStyle = Typography.titleMedium,
                         color = Blue30
                     )
-                    Spacer(modifier = Modifier.height(40.dp))
-                    CommonCard(
-                        borderColor = Blue20,
-                        backgroundColor = Blue30,
-                        textColor = White,
-                        text = stringResource(id = R.string.methodologies_content_1),
-                        modifier = Modifier
-                            .defaultMinSize(minHeight = 100.dp)
-                            .fillMaxWidth()
-                    )
-                    CommonButton(
-                        text = stringResource(id = R.string.more_info_text),
-                        buttonColor = Grey10_o4,
-                        textColor = Blue30,
-                        onCLick = {}
-                    )
-                    Spacer(modifier = Modifier.height(30.dp))
-                    CommonCard(
-                        borderColor = Blue20,
-                        backgroundColor = Blue30,
-                        textColor = White,
-                        text = stringResource(id = R.string.methodologies_content_2),
-                        modifier = Modifier
-                            .defaultMinSize(minHeight = 100.dp)
-                            .fillMaxWidth()
-                    )
-                    CommonButton(
-                        text = stringResource(id = R.string.more_info_text),
-                        buttonColor = Grey10_o4,
-                        textColor = Blue30,
-                        onCLick = {}
-                    )
-                    Spacer(modifier = Modifier.height(30.dp))
-                    CommonCard(
-                        borderColor = Blue20,
-                        backgroundColor = Blue30,
-                        textColor = White,
-                        text = stringResource(id = R.string.methodologies_content_2),
-                        modifier = Modifier
-                            .defaultMinSize(minHeight = 100.dp)
-                            .fillMaxWidth()
-                    )
-                    CommonButton(
-                        text = stringResource(id = R.string.more_info_text),
-                        buttonColor = Grey10_o4,
-                        textColor = Blue30,
-                        onCLick = {}
-                    )
+                    for (methodology in methodologies) {
+                        Spacer(modifier = Modifier.height(30.dp))
+                        CommonCard(
+                            borderColor = Blue20,
+                            backgroundColor = Blue30,
+                            textColor = White,
+                            text = methodology.description,
+                            modifier = Modifier
+                                .defaultMinSize(minHeight = 100.dp)
+                                .fillMaxWidth()
+                        )
+                        CommonButton(
+                            text = stringResource(id = R.string.more_info_text),
+                            buttonColor = Grey10_o4,
+                            textColor = Blue30,
+                            onCLick = {
+                                commonToast(
+                                    context,
+                                    Toast.LENGTH_LONG,
+                                    "Essa funcionalidade ainda não está disponível :("
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }
     }
 }
 
+fun <T> SnapshotStateList<T>.updateMethodologyList(newList: List<T>) {
+    clear()
+    addAll(newList)
+}
+
 @Preview
 @Composable
 fun MethodologiesScreenPreview() {
-    MethodologiesScreen()
+    val database = Firebase.firestore
+    val navController = rememberNavController()
+    MethodologiesScreen(navController, database)
 }

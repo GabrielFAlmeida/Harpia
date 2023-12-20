@@ -1,5 +1,6 @@
 package com.example.harpia.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,17 +15,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.CommonTextField
 import com.example.harpia.components.NavigatorIconButton
+import com.example.harpia.components.commonToast
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue30
 import com.example.harpia.ui.theme.Purple20
@@ -33,7 +38,7 @@ import com.example.harpia.ui.theme.White
 
 
 @Composable
-fun PasswordScreen() {
+fun PasswordScreen(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -49,8 +54,10 @@ fun PasswordScreen() {
                 .fillMaxSize()
                 .background(Purple20)
         ) {
+            val context = LocalContext.current
             NavigatorIconButton(
-                destinationScreen = Screen.LoginScreen,
+                navController = navController,
+                route = Screen.LoginScreen.route,
                 text = stringResource(id = R.string.back_text),
                 color = White
             )
@@ -90,7 +97,15 @@ fun PasswordScreen() {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                     )
                     Spacer(modifier = Modifier.height(250.dp))
-                    CommonButton(text = stringResource(id = R.string.change_password_text), onCLick = {})
+                    CommonButton(
+                        text = stringResource(id = R.string.change_password_text),
+                        onCLick = {
+                            commonToast(
+                                context,
+                                Toast.LENGTH_LONG,
+                                "Essa funcionalidade ainda não está disponível :("
+                            )
+                        })
                 }
             }
         }
@@ -100,5 +115,6 @@ fun PasswordScreen() {
 @Preview
 @Composable
 fun PasswordScreenPreview() {
-    PasswordScreen()
+    val navController = rememberNavController()
+    PasswordScreen(navController)
 }

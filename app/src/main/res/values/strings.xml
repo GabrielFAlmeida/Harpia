@@ -59,8 +59,6 @@
     <string name="home_thanks">Obrigado por usar nosso projeto!</string>
     <!-- Methodologies Screen -->
     <string name="methodologies_title">Mais sobre \nmetodologias \nativas</string>
-    <string name="methodologies_content_1">A Sala de aula invertida é uma metodologia criada a pouco tempo nos EUA, como uma alternativa interativa de ensinar em qualquer lugar.</string>
-    <string name="methodologies_content_2">A gamificação é um conceito aplicado em várias esferas e visa promover diversão durante o aprendizado, unindo conceitos técnicos aos jogos.</string>
     <!-- Search Experience Screen -->
     <string name="search_experience_title">Informe detalhes \npara a sua busca</string>
     <string name="search_experience_placeholder_1">Digite uma palavra chave</string>
@@ -68,8 +66,6 @@
     <string name="search_experience_placeholder_3">Qual metodologia deseja buscar?</string>
     <!-- Experience Result Screen -->
     <string name="experience_result_title">Aqui estão os \nresultados</string>
-    <string name="experience_result_content_1">Essa é uma atividade que usa sala de aula invertida e apresenta conceitos de ciência para a turma do 5ºano do ensino fundamental.</string>
-    <string name="experience_result_content_2">Essa é uma atividade que usa  gamificação e apresenta conceitos de matemática para a turma do 7ºano do ensino fundamental.</string>
     <!-- Profile Screen -->
     <string name="profile_title">Meu perfil</string>
     <string name="profile_input_placeholder_1">Seu nome: Gabriel França</string>

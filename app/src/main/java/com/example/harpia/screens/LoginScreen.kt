@@ -21,6 +21,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonTextField
@@ -30,7 +32,7 @@ import com.example.harpia.ui.theme.Purple20
 
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -77,16 +79,20 @@ fun LoginScreen() {
                 Spacer(modifier = Modifier.height(40.dp))
                 CommonButton(
                     text = stringResource(id = R.string.login_text),
-                    onCLick = {}
+                    onCLick = { navController.navigate(Screen.HomeScreen.route) }
                 )
                 NavigatorClickableText(
+                    navController = navController,
+                    route = Screen.PasswordScreen.route,
                     text = stringResource(id = R.string.login_redirect_text_1),
-                    destinationScreen = Screen.PasswordScreen
                 )
-                CommonButton(text = stringResource(id = R.string.create_account_text), onCLick = {})
+                CommonButton(
+                    text = stringResource(id = R.string.create_account_text),
+                    onCLick = { navController.navigate(Screen.SignUpScreen.route) })
                 NavigatorClickableText(
+                    navController = navController,
+                    route = Screen.AboutScreen.route,
                     text = stringResource(id = R.string.login_redirect_text_2),
-                    destinationScreen = Screen.AboutScreen
                 )
             }
         }
@@ -96,5 +102,6 @@ fun LoginScreen() {
 @Preview
 @Composable
 fun LoginPreview() {
-    LoginScreen()
+    val navController = rememberNavController()
+    LoginScreen(navController)
 }

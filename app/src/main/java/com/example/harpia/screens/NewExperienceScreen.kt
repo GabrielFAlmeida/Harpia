@@ -19,27 +19,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
-import com.example.harpia.classes.Experience
-import com.example.harpia.classes.SelectOption
+import com.example.harpia.domain.classes.Experience
+import com.example.harpia.domain.classes.SelectOption
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonSelect
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.CommonTextField
 import com.example.harpia.components.NavigatorIconButton
 import com.example.harpia.components.commonToast
-import com.example.harpia.navigation.HarpiaAppRouter
+import com.example.harpia.domain.classes.ExperienceRepository
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue30
 import com.example.harpia.ui.theme.Purple20
 import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
 import com.google.firebase.Firebase
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 @Composable
-fun NewExperienceScreen(databaseReference: DatabaseReference) {
+fun NewExperienceScreen(navController: NavController, database: FirebaseFirestore) {
+
+    val repository = ExperienceRepository()
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +62,8 @@ fun NewExperienceScreen(databaseReference: DatabaseReference) {
         ) {
             val context = LocalContext.current
             NavigatorIconButton(
-                destinationScreen = Screen.HomeScreen,
+                navController = navController,
+                route = Screen.HomeScreen.route,
                 text = stringResource(id = R.string.back_text),
                 color = White
             )
@@ -93,7 +99,7 @@ fun NewExperienceScreen(databaseReference: DatabaseReference) {
                             .fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    val experienceClass = CommonSelect(
+                    val experienceSchoolClass = CommonSelect(
                         placeholder = stringResource(id = R.string.new_experience_input_placeholder_3),
                         options = listOf(
                             SelectOption(stringResource(id = R.string.class_option_1), "6° ano"),
@@ -152,19 +158,20 @@ fun NewExperienceScreen(databaseReference: DatabaseReference) {
                         val experience = Experience(
                             experienceTitle,
                             experienceTheme,
-                            experienceClass,
+                            experienceSchoolClass,
                             experienceMethodology,
                             experienceDescription
                         )
-                        if (validateExperience(experience)) {
-                            createExperience(databaseReference, experience)
-                            commonToast(
-                                context,
-                                Toast.LENGTH_SHORT,
-                                "Experiência criada com sucesso."
-                            )
-                            HarpiaAppRouter.navigateTo(Screen.HomeScreen)
-                        } else {
+
+                        if(repository.validateExperience(experience)) {
+                                commonToast(
+                                    context,
+                                    Toast.LENGTH_SHORT,
+                                    "Experiência criada com sucesso."
+                                )
+                                repository.postExperience(experience, database)
+                                navController.navigate(Screen.HomeScreen.route)
+                        }else{
                             commonToast(
                                 context,
                                 Toast.LENGTH_LONG,
@@ -178,30 +185,10 @@ fun NewExperienceScreen(databaseReference: DatabaseReference) {
     }
 }
 
-fun validateExperience(experience: Experience): Boolean {
-    return if (experience.title.isBlank() || experience.title.isEmpty()) {
-        false
-    } else if (experience.theme.isBlank() || experience.theme.isEmpty()) {
-        false
-    } else if (experience.schoolClass.isBlank() || experience.schoolClass.isEmpty()) {
-        false
-    } else if (experience.methodology.isBlank() || experience.methodology.isEmpty()) {
-        false
-    } else if (experience.description.isBlank() || experience.description.isEmpty()) {
-        false
-    } else {
-        true
-    }
-}
-
-fun createExperience(databaseReference: DatabaseReference, experience: Experience) {
-    databaseReference.child(experience.title).setValue(experience)
-}
-
 @Preview
 @Composable
 fun NewExperienceScreenPreview() {
-    val database = Firebase.database //Caminho para encontrar o banco na nuvem.
-    val databaseReference = database.getReference("experiences")
-    NewExperienceScreen(databaseReference)
+    val database = Firebase.firestore
+    val navController = rememberNavController()
+    NewExperienceScreen(navController, database)
 }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -18,6 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
 import com.example.harpia.components.CommonBulletList
 import com.example.harpia.components.CommonText
@@ -30,7 +31,7 @@ import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
 
 @Composable
-fun AboutScreen() {
+fun AboutScreen(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -47,7 +48,8 @@ fun AboutScreen() {
                 .background(Purple20)
         ) {
             NavigatorIconButton(
-                destinationScreen = Screen.LoginScreen,
+                navController = navController,
+                route = Screen.LoginScreen.route,
                 text = stringResource(id = R.string.back_text),
                 color = White
             )
@@ -77,8 +79,9 @@ fun AboutScreen() {
             )
             Spacer(modifier = Modifier.height(20.dp))
             NavigatorClickableText(
+                navController = navController,
+                route = Screen.TeamScreen.route,
                 text = stringResource(id = R.string.about_thanks),
-                destinationScreen = Screen.TeamScreen,
                 textStyle = Typography.bodyLarge,
                 color = Blue10
             )
@@ -89,5 +92,6 @@ fun AboutScreen() {
 @Preview()
 @Composable
 fun AboutScreenPreview() {
-    AboutScreen()
+    val navController = rememberNavController()
+    AboutScreen(navController)
 }

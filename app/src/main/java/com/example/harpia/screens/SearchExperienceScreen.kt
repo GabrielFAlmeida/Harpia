@@ -1,5 +1,6 @@
 package com.example.harpia.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,26 +14,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.harpia.R
-import com.example.harpia.classes.SelectOption
+import com.example.harpia.domain.classes.SelectOption
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonSelect
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.CommonTextField
 import com.example.harpia.components.NavigatorIconButton
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.harpia.domain.classes.ExperienceSearch
+import com.example.harpia.components.commonToast
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue30
 import com.example.harpia.ui.theme.Purple20
 import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
 
-
 @Composable
-fun SearchExperienceScreen() {
+fun SearchExperienceScreen(navController: NavHostController) {
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -48,8 +54,10 @@ fun SearchExperienceScreen() {
                 .fillMaxSize()
                 .background(Purple20)
         ) {
+            val context = LocalContext.current
             NavigatorIconButton(
-                destinationScreen = Screen.HomeScreen,
+                navController = navController,
+                route = Screen.HomeScreen.route,
                 text = stringResource(id = R.string.back_text),
                 color = White
             )
@@ -73,45 +81,103 @@ fun SearchExperienceScreen() {
                         color = Blue30
                     )
                     Spacer(modifier = Modifier.height(40.dp))
-                    CommonTextField(
+                    val experienceSearchKeyword = CommonTextField(
                         placeholder = stringResource(id = R.string.search_experience_placeholder_1),
                         modifier = Modifier
                             .fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CommonSelect(
+                    val experienceSearchSchoolClass = CommonSelect(
                         placeholder = stringResource(id = R.string.search_experience_placeholder_2),
                         options = listOf(
-                            SelectOption(stringResource(id = R.string.class_option_1), "6_EF"),
-                            SelectOption(stringResource(id = R.string.class_option_2), "7_EF"),
-                            SelectOption(stringResource(id = R.string.class_option_3), "8_EF"),
-                            SelectOption(stringResource(id = R.string.class_option_4), "9_EF"),
-                            SelectOption(stringResource(id = R.string.class_option_5), "1_EM"),
-                            SelectOption(stringResource(id = R.string.class_option_6), "2_EM"),
-                            SelectOption(stringResource(id = R.string.class_option_7), "3_EM"),
+                            SelectOption(stringResource(id = R.string.class_option_1), "6° ano"),
+                            SelectOption(stringResource(id = R.string.class_option_2), "7° ano"),
+                            SelectOption(stringResource(id = R.string.class_option_3), "8° ano"),
+                            SelectOption(stringResource(id = R.string.class_option_4), "9° ano"),
+                            SelectOption(
+                                stringResource(id = R.string.class_option_5),
+                                "1° ano do E.M."
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.class_option_6),
+                                "2° ano do E.M."
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.class_option_7),
+                                "3° ano do E.M."
+                            ),
                         )
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CommonSelect(
+                    val experienceSearchMethodology = CommonSelect(
                         placeholder = stringResource(id = R.string.search_experience_placeholder_3),
                         options = listOf(
-                            SelectOption(stringResource(id = R.string.methodology_option_1), "INV_CLASS"),
-                            SelectOption(stringResource(id = R.string.methodology_option_2), "GAME"),
-                            SelectOption(stringResource(id = R.string.methodology_option_3), "PROJ"),
-                            SelectOption(stringResource(id = R.string.methodology_option_4), "DESIGN_THNK"),
-                            SelectOption(stringResource(id = R.string.methodology_option_5), "OTHER")
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_1),
+                                "Sala de aula invertida"
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_2),
+                                "Gameficação"
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_3),
+                                "Aprendizagem por projeto"
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_4),
+                                "Design Thinking"
+                            ),
+                            SelectOption(
+                                stringResource(id = R.string.methodology_option_5),
+                                "Outra"
+                            )
                         )
                     )
                     Spacer(modifier = Modifier.height(220.dp))
-                    CommonButton(text = stringResource(id = R.string.search_info_text), onCLick = {})
+                    CommonButton(text = stringResource(id = R.string.search_info_text), onCLick = {
+                        val experienceSearch = ExperienceSearch(
+                            experienceSearchKeyword,
+                            experienceSearchMethodology,
+                            experienceSearchSchoolClass,
+                        )
+                        if (validateSearchExperience(experienceSearch)) {
+                            navController.navigate(
+                                Screen.ExperienceResultScreen.withMandatoryArgs(
+                                    experienceSearchKeyword,
+                                    experienceSearchMethodology,
+                                    experienceSearchSchoolClass
+                                )
+                            )
+                        } else {
+                            commonToast(
+                                context,
+                                Toast.LENGTH_LONG,
+                                "Preencha todos os campos para buscar experiências."
+                            )
+                        }
+                    })
                 }
             }
         }
     }
 }
 
+fun validateSearchExperience(experienceSearch: ExperienceSearch): Boolean {
+    return if (experienceSearch.experienceSearchKeyword.isBlank() || experienceSearch.experienceSearchKeyword.isEmpty()) {
+        false
+    } else if (experienceSearch.experienceSearchMethodology.isBlank() || experienceSearch.experienceSearchMethodology.isEmpty()) {
+        false
+    } else if (experienceSearch.experienceSearchSchoolClass.isBlank() || experienceSearch.experienceSearchSchoolClass.isEmpty()) {
+        false
+    } else {
+        true
+    }
+}
+
 @Preview
 @Composable
 fun SearchExperienceScreenPreview() {
-    SearchExperienceScreen()
+    val navController = rememberNavController()
+    SearchExperienceScreen(navController)
 }

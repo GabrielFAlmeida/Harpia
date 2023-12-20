@@ -1,8 +1,6 @@
 package com.example.harpia.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,20 +24,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
 import com.example.harpia.components.ClickableImageButton
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.NavigatorIconButton
-import com.example.harpia.navigation.HarpiaAppRouter
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue30
 import com.example.harpia.ui.theme.Purple20
 import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
 
-
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -56,7 +54,8 @@ fun HomeScreen() {
                 .background(Purple20)
         ) {
             NavigatorIconButton(
-                destinationScreen = Screen.LoginScreen,
+                navController = navController,
+                route = Screen.LoginScreen.route,
                 text = stringResource(id = R.string.close_text),
                 color = White,
                 imageVector = Icons.Filled.Close,
@@ -90,7 +89,8 @@ fun HomeScreen() {
                             modifier = Modifier
                                 .width(125.dp)
                                 .background(Color.Transparent),
-                            destinationScreen = Screen.NewExperienceScreen,
+                            navController = navController,
+                            route = Screen.NewExperienceScreen.route,
                             imageId = R.drawable.icone_compartilhar_experiencia,
                             text = stringResource(id = R.string.home_button_content_1),
                             color = Blue30,
@@ -99,7 +99,8 @@ fun HomeScreen() {
                             modifier = Modifier
                                 .width(125.dp)
                                 .background(Color.Transparent),
-                            destinationScreen = Screen.SearchExperienceScreen,
+                            navController = navController,
+                            route = Screen.SearchExperienceScreen.route,
                             imageId = R.drawable.icone_buscar,
                             text = stringResource(id = R.string.home_button_content_2),
                             color = Blue30,
@@ -114,7 +115,8 @@ fun HomeScreen() {
                             modifier = Modifier
                                 .width(125.dp)
                                 .background(Color.Transparent),
-                            destinationScreen = Screen.MethodologiesScreen,
+                            navController = navController,
+                            route = Screen.MethodologiesScreen.route,
                             imageId = R.drawable.icone_editar,
                             text = stringResource(id = R.string.home_button_content_3),
                             color = Blue30,
@@ -123,7 +125,8 @@ fun HomeScreen() {
                             modifier = Modifier
                                 .width(125.dp)
                                 .background(Color.Transparent),
-                            destinationScreen = Screen.ProfileScreen,
+                            navController = navController,
+                            route = Screen.ProfileScreen.route,
                             imageId = R.drawable.icone_perfil,
                             text = stringResource(id = R.string.home_button_content_4),
                             color = Blue30,
@@ -146,5 +149,6 @@ fun HomeScreen() {
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    val navController = rememberNavController()
+    HomeScreen(navController)
 }

@@ -1,5 +1,6 @@
 package com.example.harpia.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,15 +21,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
 import com.example.harpia.components.CommonButton
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.CommonTextField
 import com.example.harpia.components.NavigatorIconButton
+import com.example.harpia.components.commonToast
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue30
 import com.example.harpia.ui.theme.Purple20
@@ -37,7 +42,7 @@ import com.example.harpia.ui.theme.White
 
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -53,8 +58,10 @@ fun ProfileScreen() {
                 .fillMaxSize()
                 .background(Purple20)
         ) {
+            val context = LocalContext.current
             NavigatorIconButton(
-                destinationScreen = Screen.HomeScreen,
+                navController = navController,
+                route = Screen.HomeScreen.route,
                 text = stringResource(id = R.string.back_text),
                 color = White
             )
@@ -128,7 +135,13 @@ fun ProfileScreen() {
                         readonly = true
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    CommonButton(text = stringResource(id = R.string.save_info_text), onCLick = {})
+                    CommonButton(text = stringResource(id = R.string.save_info_text), onCLick = {
+                        commonToast(
+                            context,
+                            Toast.LENGTH_LONG,
+                            "Essa funcionalidade ainda não está disponível :("
+                        )
+                    })
                 }
             }
         }
@@ -138,5 +151,6 @@ fun ProfileScreen() {
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    val navController = rememberNavController()
+    ProfileScreen(navController)
 }

@@ -1,34 +1,28 @@
 package com.example.harpia.screens
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
 import com.example.harpia.components.CommonBulletList
 import com.example.harpia.components.CommonText
 import com.example.harpia.components.NavigatorIconButton
-import com.example.harpia.navigation.HarpiaAppRouter
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue10
 import com.example.harpia.ui.theme.Purple20
@@ -36,7 +30,7 @@ import com.example.harpia.ui.theme.Typography
 import com.example.harpia.ui.theme.White
 
 @Composable
-fun TeamScreen() {
+fun TeamScreen(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -53,7 +47,8 @@ fun TeamScreen() {
                 .background(Purple20)
         ) {
             NavigatorIconButton(
-                destinationScreen = Screen.AboutScreen,
+                navController = navController,
+                route = Screen.AboutScreen.route,
                 text = stringResource(id = R.string.back_text),
                 color = White
             )
@@ -88,5 +83,6 @@ fun TeamScreen() {
 @Preview
 @Composable
 fun TeamScreenPreview() {
-    TeamScreen()
+    val navController = rememberNavController()
+    TeamScreen(navController)
 }

@@ -63,9 +63,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.harpia.R
-import com.example.harpia.classes.SelectOption
-import com.example.harpia.navigation.HarpiaAppRouter
+import com.example.harpia.domain.classes.SelectOption
 import com.example.harpia.navigation.Screen
 import com.example.harpia.ui.theme.Blue20
 import com.example.harpia.ui.theme.Blue20_o1
@@ -107,9 +108,10 @@ fun CommonTextPreview() {
 
 @Composable
 fun NavigatorClickableText(
+    navController: NavController,
+    route: String,
     text: String,
     modifier: Modifier = Modifier.heightIn(min = 20.dp),
-    destinationScreen: Screen,
     textStyle: TextStyle = Typography.displaySmall,
     color: Color = Blue30
 ) {
@@ -123,7 +125,7 @@ fun NavigatorClickableText(
     ) {
         ClickableText(
             text = annotatedText,
-            onClick = { HarpiaAppRouter.navigateTo(destinationScreen) },
+            onClick = { navController.navigate(route) },
             modifier = modifier,
             style = textStyle
         )
@@ -134,8 +136,9 @@ fun NavigatorClickableText(
 @Composable
 fun NavigatorClickableTextPreview() {
     NavigatorClickableText(
+        navController = rememberNavController(),
+        route = Screen.HomeScreen.route,
         text = stringResource(id = R.string.login_redirect_text_1),
-        destinationScreen = Screen.AboutScreen
     )
 }
 
@@ -343,7 +346,8 @@ fun CommonButtonPreview() {
 
 @Composable
 fun NavigatorIconButton(
-    destinationScreen: Screen = Screen.SignUpScreen,
+    navController: NavController,
+    route: String,
     text: String,
     color: Color = White,
     imageVector: ImageVector = Icons.Filled.ArrowBack,
@@ -353,7 +357,7 @@ fun NavigatorIconButton(
         modifier = Modifier.background(Color.Transparent),
     ) {
         IconButton(
-            onClick = { HarpiaAppRouter.navigateTo(destinationScreen) },
+            onClick = { navController.navigate((route)) },
         ) {
             Icon(
                 imageVector = imageVector, contentDescription = contentDescription, tint = color
@@ -375,7 +379,8 @@ fun NavigatorIconButton(
 @Composable
 fun NavigatorIconButtonPreview() {
     NavigatorIconButton(
-        destinationScreen = Screen.SignUpScreen,
+        navController = rememberNavController(),
+        route = Screen.HomeScreen.route,
         text = stringResource(id = R.string.back_text),
         color = White
     )
@@ -384,7 +389,8 @@ fun NavigatorIconButtonPreview() {
 @Composable
 fun ClickableImageButton(
     modifier: Modifier = Modifier.background(Color.Transparent),
-    destinationScreen: Screen = Screen.HomeScreen,
+    navController: NavController,
+    route: String,
     text: String,
     color: Color = White,
     imageId: Int = R.drawable.icone_compartilhar_experiencia,
@@ -395,7 +401,7 @@ fun ClickableImageButton(
     ) {
         Surface(
             modifier = Modifier.background(Color.Transparent),
-            onClick = { HarpiaAppRouter.navigateTo(destinationScreen) }) {
+            onClick = { navController.navigate(route) }) {
             Image(
                 painter = painterResource(id = imageId),
                 contentDescription = contentDescription,
@@ -416,7 +422,8 @@ fun ClickableImageButton(
 @Composable
 fun ClickableImageButtonPreview() {
     ClickableImageButton(
-        destinationScreen = Screen.HomeScreen,
+        navController = rememberNavController(),
+        route = Screen.NewExperienceScreen.route,
         text = stringResource(id = R.string.home_button_content_1),
         color = Blue30
     )
